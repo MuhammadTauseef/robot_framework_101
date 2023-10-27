@@ -43,3 +43,17 @@ Documentation   This is my first test case
 Library OperatingSystem
 ```
 
+In the below tests, TEST is name of the test and it only has a Log keyward with a message
+```
+*** Test Cases ***
+TEST
+    Log     This is testcase
+```
+
+### Executing tests
+
+In the terminal of Pycharm execute below
+
+```
+robot Tests\TestCase1.robot
+```
