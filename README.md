@@ -6,7 +6,7 @@ Follow the instrution of installing Python, should be version 3.8 or above
 https://wiki.python.org/moin/BeginnersGuide/Download
 
 ## Install Robot Framework
-open CMD in Windows and enter following:
+open command prompt and enter following:
 ```
 pip install robotframework
 ```
