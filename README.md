@@ -155,7 +155,7 @@ To create your own keywords
 ```
 *** Keywords ***
 Log my output
-    Log This is my log output
+    Log     This is my log output
 
 *** Test cases ***
 TEST
@@ -167,9 +167,32 @@ Passing arguments to keywords
 ```
 *** Keywords ***
 Log my output
-    [Arguments] ${msg}
-    Log This is my log message ${msg}
+    [Arguments]     ${msg}
+    Log     This is my log message ${msg}
 
 *** Test cases ***
 TEST
     Log my output log msg is this.
+```
+
+### Resources files
+Resources files declared shared keywords among multiple tests. Resource file does not have 
+test cases section.
+e.g. in Resources\resources.robot file
+```
+*** Settings ***
+
+*** Keywords ***
+Log my output
+    [Arguments]     ${msg}
+    Log     This is my log message ${msg}
+*** Variables ***
+```
+
+Then in main test case file you can include resources as below and after that the keyword **Log my output** will be available
+in the test file
+
+```
+*** Settings ***
+Resource    ../Resources/resources.robot
+```
