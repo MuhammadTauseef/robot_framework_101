@@ -149,3 +149,27 @@ TEST1
     Log     ${DICTIONARY}[username]
     Log     ${DICTIONARY}[password]
 ```
+
+### Keywords setion
+To create your own keywords
+```
+*** Keywords ***
+Log my output
+    Log This is my log output
+
+*** Test cases ***
+TEST
+    Log my output
+```
+
+Passing arguments to keywords
+
+```
+*** Keywords ***
+Log my output
+    [Arguments] ${msg}
+    Log This is my log message ${msg}
+
+*** Test cases ***
+TEST
+    Log my output log msg is this.
