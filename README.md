@@ -196,3 +196,14 @@ in the test file
 *** Settings ***
 Resource    ../Resources/resources.robot
 ```
+
+## Rest API Testing
+
+### Setup
+Install required libraris
+```
+pip install requests
+pip install robotframework-requests
+pip install robotframework-jsonlibrary
+```
+
