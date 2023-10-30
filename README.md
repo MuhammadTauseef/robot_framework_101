@@ -207,3 +207,51 @@ pip install robotframework-requests
 pip install robotframework-jsonlibrary
 ```
 
+### Create first test case with GET
+Public free API we are going to test is as below
+
+https://github.com/davemachado/public-api
+
+https://api.publicapis.org/entries
+
+https://api.publicapis.org/entries?title=Axolotl
+
+Import libraries in settings
+```
+*** Settings ***
+Documentation    This is GET request test case
+Resource       ../Resources/resources.robot
+Library     RequestsLibrary
+```
+
+Define Variables
+```
+*** Variables ***
+${base_url}     https://api.publicapis.org
+${title}        Axolotl
+```
+
+In the test case log output to the console to check the progress
+```
+*** Test Cases ***
+Get_entry
+    Create session  mysession   ${base_url}     verify=true
+    ${response} =   Get on session     mysession   /entries\?title\=${title}
+    Log to console      ${response}
+    Log to console      ${response.content}
+    Log to console      ${response.headers}
+```
+
+output for response, response.content and resonse.headers will be as below:
+
+<Response [200]>
+
+.b'{"count":1,"entries":[{"API":"Axolotl","Description":"Collection of axolotl pictures and facts","Auth":"","HTTPS":true,"Cors":"no","Link":"https://theaxolotlapi.netlify.app/","Category":"Animals"}]}\n'
+
+.{'Access-Control-Allow-Origin': '*', 'Content-Length': '199', 'Content-Type': 'application/json', 'Date': 'Mon, 30 Oct 2023 18:11:48 GMT', 'Server': 'Caddy', 'X-Rate-Limit-Duration': '1', 'X-Rate-Limit-Limit': '10.00', 'X-Rate-
+Limit-Request-Forwarded-For': '103.151.43.91', 'X-Rate-Limit-Request-Remote-Addr': '172.17.0.1:41072'}
+
+Three types of validation is specified in the file, one for status code validation, another for a word present in body
+and lastly, content type validation in the header.
+
+Final file is TC1_GET_Request.robot
