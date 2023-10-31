@@ -282,3 +282,18 @@ ull, \n  "origin": "103.151.43.91", \n  "url": "https://httpbin.org/post"\n}\n'
 
 
 Final file is TC2_POST_Request.robot
+
+### Create test case for JSON validation
+
+json load from a file can be done with below method
+```
+    ${json_data}=       Load json from file     Data/jsondata.json
+```
+However, during API testing json will come as a response from API call.
+
+Getting value of a particular json element and validating is done as below
+```
+${window_title_value}=      get value from json     ${json_data}        $.widget.window.title
+should be equal    ${window_title_value[0]}   Sample Konfabulator Widget
+```
+Final file is TC3_JSON.robot

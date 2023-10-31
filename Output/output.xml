@@ -1,136 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231031 11:10:24.931" rpa="false" schemaversion="4">
-<suite id="s1" name="TC2 POST Request" source="C:\Users\emutaus\PycharmProjects\robot_framework_101\Tests\TC2_POST_Request.robot">
-<test id="s1-t1" name="Create_Something" line="11">
-<kw name="Create Session" library="RequestsLibrary">
-<arg>mysession</arg>
-<arg>${base_url}</arg>
-<arg>verify=true</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20231031 11:10:25.021" level="INFO">Creating Session using : alias=mysession, url=https://httpbin.org, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
-<status status="PASS" starttime="20231031 11:10:25.021" endtime="20231031 11:10:25.022"/>
+<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231031 12:03:38.805" rpa="false" schemaversion="4">
+<suite id="s1" name="TC3 JSON" source="C:\Users\emutaus\PycharmProjects\robot_framework_101\Tests\TC3_JSON.robot">
+<test id="s1-t1" name="ValidateJSON" line="9">
+<kw name="Load Json From File" library="JSONLibrary">
+<var>${json_data}</var>
+<arg>Data/jsondata.json</arg>
+<doc>Load JSON from file.</doc>
+<msg timestamp="20231031 12:03:38.911" level="INFO">${json_data} = {'widget': {'debug': 'on', 'window': {'title': 'Sample Konfabulator Widget', 'name': 'main_window', 'width': 500, 'height': 500}, 'image': {'src': 'Images/Sun.png', 'name': 'sun1', 'hOffset': 250, 'vO...</msg>
+<status status="PASS" starttime="20231031 12:03:38.910" endtime="20231031 12:03:38.911"/>
 </kw>
-<kw name="Create Dictionary" library="BuiltIn">
-<var>${body}</var>
-<arg>username=user</arg>
-<arg>password=passs</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<msg timestamp="20231031 11:10:25.022" level="INFO">${body} = {'username': 'user', 'password': 'passs'}</msg>
-<status status="PASS" starttime="20231031 11:10:25.022" endtime="20231031 11:10:25.022"/>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${debug_value}</var>
+<arg>${json_data}</arg>
+<arg>$.widget.debug</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20231031 12:03:38.923" level="INFO">${debug_value} = ['on']</msg>
+<status status="PASS" starttime="20231031 12:03:38.911" endtime="20231031 12:03:38.923"/>
 </kw>
-<kw name="Create Dictionary" library="BuiltIn">
-<var>${header}</var>
-<arg>Content-Type=application/json</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<msg timestamp="20231031 11:10:25.022" level="INFO">${header} = {'Content-Type': 'application/json'}</msg>
-<status status="PASS" starttime="20231031 11:10:25.022" endtime="20231031 11:10:25.022"/>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${window_title_value}</var>
+<arg>${json_data}</arg>
+<arg>$.widget.window.title</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20231031 12:03:38.934" level="INFO">${window_title_value} = ['Sample Konfabulator Widget']</msg>
+<status status="PASS" starttime="20231031 12:03:38.924" endtime="20231031 12:03:38.934"/>
 </kw>
-<kw name="POST On Session" library="RequestsLibrary">
-<var>${response}</var>
-<arg>mysession</arg>
-<arg>/post</arg>
-<arg>${body}</arg>
-<arg>${header}</arg>
-<doc>Sends a POST request on a previously created HTTP Session.</doc>
-<msg timestamp="20231031 11:10:26.270" level="INFO">POST Request : url=https://httpbin.org/post 
- path_url=/post 
- headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '28', 'Content-Type': 'application/x-www-form-urlencoded'} 
- body=username=user&amp;password=passs 
- </msg>
-<msg timestamp="20231031 11:10:26.270" level="INFO">POST Response : url=https://httpbin.org/post 
- status=200, reason=OK 
- headers={'Date': 'Tue, 31 Oct 2023 06:10:27 GMT', 'Content-Type': 'application/json', 'Content-Length': '510', 'Connection': 'keep-alive', 'Server': 'gunicorn/19.9.0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true'} 
- body={
-  "args": {}, 
-  "data": "", 
-  "files": {}, 
-  "form": {
-    "password": "passs", 
-    "username": "user"
-  }, 
-  "headers": {
-    "Accept": "*/*", 
-    "Accept-Encoding": "gzip, deflate", 
-    "Content-Length": "28", 
-    "Content-Type": "application/x-www-form-urlencoded", 
-    "Host": "httpbin.org", 
-    "User-Agent": "python-requests/2.31.0", 
-    "X-Amzn-Trace-Id": "Root=1-65409a53-188a83d7449fed867e422739"
-  }, 
-  "json": null, 
-  "origin": "103.151.43.91", 
-  "url": "https://httpbin.org/post"
-}
- 
- </msg>
-<msg timestamp="20231031 11:10:26.270" level="INFO">${response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20231031 11:10:25.022" endtime="20231031 11:10:26.270"/>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${image_value}</var>
+<arg>${json_data}</arg>
+<arg>$.widget.image</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20231031 12:03:38.943" level="INFO">${image_value} = [{'src': 'Images/Sun.png', 'name': 'sun1', 'hOffset': 250, 'vOffset': 250, 'alignment': 'center'}]</msg>
+<status status="PASS" starttime="20231031 12:03:38.934" endtime="20231031 12:03:38.943"/>
 </kw>
 <kw name="Log To Console" library="BuiltIn">
-<arg>${response.status_code}</arg>
+<arg>${json_data}</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20231031 11:10:26.271" endtime="20231031 11:10:26.272"/>
+<status status="PASS" starttime="20231031 12:03:38.943" endtime="20231031 12:03:38.944"/>
 </kw>
 <kw name="Log To Console" library="BuiltIn">
-<arg>${response.content}</arg>
+<arg>${debug_value}</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20231031 11:10:26.273" endtime="20231031 11:10:26.274"/>
-</kw>
-<kw name="Convert To String" library="BuiltIn">
-<var>${status_code}</var>
-<arg>${response.status_code}</arg>
-<doc>Converts the given item to a Unicode string.</doc>
-<msg timestamp="20231031 11:10:26.276" level="INFO">${status_code} = 200</msg>
-<status status="PASS" starttime="20231031 11:10:26.275" endtime="20231031 11:10:26.276"/>
+<status status="PASS" starttime="20231031 12:03:38.945" endtime="20231031 12:03:38.945"/>
 </kw>
 <kw name="Should Be Equal" library="BuiltIn">
-<arg>${status_code}</arg>
-<arg>200</arg>
+<arg>${debug_value[0]}</arg>
+<arg>on</arg>
 <doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20231031 11:10:26.276" endtime="20231031 11:10:26.276"/>
-</kw>
-<kw name="Convert To String" library="BuiltIn">
-<var>${body}</var>
-<arg>${response.content}</arg>
-<doc>Converts the given item to a Unicode string.</doc>
-<msg timestamp="20231031 11:10:26.277" level="INFO">${body} = {
-  "args": {}, 
-  "data": "", 
-  "files": {}, 
-  "form": {
-    "password": "passs", 
-    "username": "user"
-  }, 
-  "headers": {
-    "Accept": "*/*", 
-    "Accept-Encoding": "gzip, deflate", 
-    "Co...</msg>
-<status status="PASS" starttime="20231031 11:10:26.277" endtime="20231031 11:10:26.277"/>
-</kw>
-<kw name="Should Contain" library="BuiltIn">
-<arg>${body}</arg>
-<arg>user</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" starttime="20231031 11:10:26.278" endtime="20231031 11:10:26.278"/>
-</kw>
-<kw name="Get From Dictionary" library="Collections">
-<var>${contentTypeValue}</var>
-<arg>${response.headers}</arg>
-<arg>Content-Type</arg>
-<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
-<msg timestamp="20231031 11:10:26.279" level="INFO">${contentTypeValue} = application/json</msg>
-<status status="PASS" starttime="20231031 11:10:26.279" endtime="20231031 11:10:26.279"/>
+<status status="PASS" starttime="20231031 12:03:38.945" endtime="20231031 12:03:38.946"/>
 </kw>
 <kw name="Should Be Equal" library="BuiltIn">
-<arg>${contentTypeValue}</arg>
-<arg>application/json</arg>
+<arg>${window_title_value[0]}</arg>
+<arg>Sample Konfabulator Widget</arg>
 <doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20231031 11:10:26.279" endtime="20231031 11:10:26.280"/>
+<status status="PASS" starttime="20231031 12:03:38.946" endtime="20231031 12:03:38.946"/>
 </kw>
-<status status="PASS" starttime="20231031 11:10:25.021" endtime="20231031 11:10:26.280"/>
+<status status="PASS" starttime="20231031 12:03:38.910" endtime="20231031 12:03:38.947"/>
 </test>
-<doc>This is POST request test case</doc>
-<status status="PASS" starttime="20231031 11:10:24.932" endtime="20231031 11:10:26.281"/>
+<doc>This is JSON validation test case</doc>
+<status status="PASS" starttime="20231031 12:03:38.806" endtime="20231031 12:03:38.947"/>
 </suite>
 <statistics>
 <total>
@@ -139,7 +67,7 @@
 <tag>
 </tag>
 <suite>
-<stat pass="1" fail="0" skip="0" id="s1" name="TC2 POST Request">TC2 POST Request</stat>
+<stat pass="1" fail="0" skip="0" id="s1" name="TC3 JSON">TC3 JSON</stat>
 </suite>
 </statistics>
 <errors>
