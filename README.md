@@ -207,7 +207,7 @@ pip install robotframework-requests
 pip install robotframework-jsonlibrary
 ```
 
-### Create first test case with GET
+### Create test case with GET
 Public free API we are going to test is as below
 
 https://resttesttest.com/#
@@ -227,7 +227,7 @@ Define Variables
 ${base_url}     https://httpbin.org
 ```
 
-In the test case log output to the console to check the progress
+Create session towards the URL, then pass Get request onto the session and store the response in response varable. In the test case log output to the console to check the progress
 ```
 *** Test Cases ***
 Get_entry
@@ -261,3 +261,24 @@ Three types of validation is specified in the file, one for status code validati
 and lastly, content type validation in the header.
 
 Final file is TC1_GET_Request.robot
+
+### Create test case with POST
+
+In Post, body and headers needs to be passed which can be created with Collections create dictionary keyword.
+```
+*** Test Cases ***
+Create_Something
+    Create session  mysession   ${base_url}     verify=true
+    ${body}=    create dictionary    username=user  password=passs
+    ${header}=    create dictionary    Content-Type=application/json
+    ${response} =   Post on session     mysession    /post      ${body}     ${header}
+```
+
+Log output of response.status_code and response.content is as below
+200
+.b'{\n  "args": {}, \n  "data": "", \n  "files": {}, \n  "form": {\n    "password": "passs", \n    "username": "user"\n  }, \n  "headers": {\n    "Accept": "*/*", \n    "Accept-Encoding": "gzip, deflate", \n    "Content-Length":
+ "28", \n    "Content-Type": "application/x-www-form-urlencoded", \n    "Host": "httpbin.org", \n    "User-Agent": "python-requests/2.31.0", \n    "X-Amzn-Trace-Id": "Root=1-6540991b-7a9e63333119bd956e277a9e"\n  }, \n  "json": n
+ull, \n  "origin": "103.151.43.91", \n  "url": "https://httpbin.org/post"\n}\n'
+
+
+Final file is TC2_POST_Request.robot

@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation    This is GET request test case
+Documentation    This is POST request test case
 Resource       ../Resources/resources.robot
 Library     Collections
 Library     RequestsLibrary
@@ -8,19 +8,22 @@ Library     RequestsLibrary
 ${base_url}     https://httpbin.org
 
 *** Test Cases ***
-Get_entry
+Create_Something
     Create session  mysession   ${base_url}     verify=true
-    ${response} =   Get on session     mysession    /get
-#    Log to console      ${response}
-#    Log to console      ${response.content}
-#    Log to console      ${response.headers}
+    ${body}=    create dictionary    username=user  password=passs
+    ${header}=    create dictionary    Content-Type=application/json
+    ${response} =   Post on session     mysession    /post      ${body}     ${header}
+
+    Log to console      ${response.status_code}
+    Log to console      ${response.content}
+
 
     ${status_code}=  convert to string    ${response.status_code}
     should be equal    ${status_code}   200
 
 
     ${body}=  convert to string    ${response.content}
-    should contain    ${body}       httpbin.org
+    should contain    ${body}       user
 
     ${contentTypeValue}=  get from dictionary    ${response.headers}    Content-Type
     should be equal    ${contentTypeValue}   application/json
