@@ -353,8 +353,19 @@ BasicAuthTypeTest
 
 Final file is TC6_BasicAuthType.robot
 
-### Create test case for basic authentication validation
+### Create test case for Bearer authentication validation
 
+Bearer authentication can be defined in variables as below
+```
+${bearerToken}  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva"
+```
 
+Headers and request body can be created and sent in Post request as below
 
+```
+    ${headers}  create dictionary     Authorization=${bearerToken} Content-Type=text/xml
+    ${req_body}=    get file    Data/books.xml
+
+    ${response} =   Post on session     mysession    /post  data=${req_body}    headers=${headers}
+```
 Final file is TC7_BearerAuthType.robot

@@ -1,121 +1,211 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231031 14:22:45.600" rpa="false" schemaversion="4">
-<suite id="s1" name="TC6 BasicAuthType" source="C:\Users\emutaus\PycharmProjects\robot_framework_101\Tests\TC6_BasicAuthType.robot">
-<test id="s1-t1" name="BasicAuthTypeTest" line="11">
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>user</arg>
-<arg>pass</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20231031 14:22:45.700" level="INFO">${auth} = ['user', 'pass']</msg>
-<status status="PASS" starttime="20231031 14:22:45.700" endtime="20231031 14:22:45.700"/>
-</kw>
+<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231031 15:04:47.074" rpa="false" schemaversion="4">
+<suite id="s1" name="TC7 BearerAuthType" source="C:\Users\emutaus\PycharmProjects\robot_framework_101\Tests\TC7_BearerAuthType.robot">
+<test id="s1-t1" name="BasicAuthTypeTest" line="13">
 <kw name="Create Session" library="RequestsLibrary">
 <arg>mysession</arg>
 <arg>${base_url}</arg>
-<arg>auth=${auth}</arg>
 <arg>verify=true</arg>
 <doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20231031 14:22:45.701" level="INFO">Creating Session using : alias=mysession, url=https://httpbin.org, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x000001D567060BC0&gt;, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
-<status status="PASS" starttime="20231031 14:22:45.701" endtime="20231031 14:22:45.701"/>
+<msg timestamp="20231031 15:04:47.178" level="INFO">Creating Session using : alias=mysession, url=https://httpbin.org, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20231031 15:04:47.178" endtime="20231031 15:04:47.178"/>
 </kw>
-<kw name="GET On Session" library="RequestsLibrary">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Authorization=${bearerToken} Content-Type=text/xml</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231031 15:04:47.179" level="INFO">${headers} = {'Authorization': '"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva" Content-Type=text/xml'}</msg>
+<status status="PASS" starttime="20231031 15:04:47.179" endtime="20231031 15:04:47.179"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${req_body}</var>
+<arg>Data/books.xml</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20231031 15:04:47.179" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\emutaus\PycharmProjects\robot_framework_101\Data\books.xml"&gt;C:\Users\emutaus\PycharmProjects\robot_framework_101\Data\books.xml&lt;/a&gt;'.</msg>
+<msg timestamp="20231031 15:04:47.180" level="INFO">${req_body} = &lt;?xml version="1.0"?&gt;
+&lt;catalog&gt;
+   &lt;book id="bk101"&gt;
+      &lt;author&gt;Gambardella, Matthew&lt;/author&gt;
+      &lt;title&gt;XML Developer's Guide&lt;/title&gt;
+      &lt;genre&gt;Computer&lt;/genre&gt;
+      &lt;price&gt;44.95&lt;/price&gt;
+   ...</msg>
+<status status="PASS" starttime="20231031 15:04:47.179" endtime="20231031 15:04:47.180"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
 <var>${response}</var>
 <arg>mysession</arg>
-<arg>/get</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20231031 14:22:46.940" level="INFO">GET Request : url=https://httpbin.org/get 
- path_url=/get 
- headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic dXNlcjpwYXNz'} 
- body=None 
+<arg>/post</arg>
+<arg>data=${req_body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231031 15:04:48.691" level="INFO">POST Request : url=https://httpbin.org/post 
+ path_url=/post 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': '"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva" Content-Type=text/xml', 'Content-Length': '4411'} 
+ body=&lt;?xml version="1.0"?&gt;
+&lt;catalog&gt;
+   &lt;book id="bk101"&gt;
+      &lt;author&gt;Gambardella, Matthew&lt;/author&gt;
+      &lt;title&gt;XML Developer's Guide&lt;/title&gt;
+      &lt;genre&gt;Computer&lt;/genre&gt;
+      &lt;price&gt;44.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-10-01&lt;/publish_date&gt;
+      &lt;description&gt;An in-depth look at creating applications
+      with XML.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk102"&gt;
+      &lt;author&gt;Ralls, Kim&lt;/author&gt;
+      &lt;title&gt;Midnight Rain&lt;/title&gt;
+      &lt;genre&gt;Fantasy&lt;/genre&gt;
+      &lt;price&gt;5.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-12-16&lt;/publish_date&gt;
+      &lt;description&gt;A former architect battles corporate zombies,
+      an evil sorceress, and her own childhood to become queen
+      of the world.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk103"&gt;
+      &lt;author&gt;Corets, Eva&lt;/author&gt;
+      &lt;title&gt;Maeve Ascendant&lt;/title&gt;
+      &lt;genre&gt;Fantasy&lt;/genre&gt;
+      &lt;price&gt;5.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-11-17&lt;/publish_date&gt;
+      &lt;description&gt;After the collapse of a nanotechnology
+      society in England, the young survivors lay the
+      foundation for a new society.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk104"&gt;
+      &lt;author&gt;Corets, Eva&lt;/author&gt;
+      &lt;title&gt;Oberon's Legacy&lt;/title&gt;
+      &lt;genre&gt;Fantasy&lt;/genre&gt;
+      &lt;price&gt;5.95&lt;/price&gt;
+      &lt;publish_date&gt;2001-03-10&lt;/publish_date&gt;
+      &lt;description&gt;In post-apocalypse England, the mysterious
+      agent known only as Oberon helps to create a new life
+      for the inhabitants of London. Sequel to Maeve
+      Ascendant.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk105"&gt;
+      &lt;author&gt;Corets, Eva&lt;/author&gt;
+      &lt;title&gt;The Sundered Grail&lt;/title&gt;
+      &lt;genre&gt;Fantasy&lt;/genre&gt;
+      &lt;price&gt;5.95&lt;/price&gt;
+      &lt;publish_date&gt;2001-09-10&lt;/publish_date&gt;
+      &lt;description&gt;The two daughters of Maeve, half-sisters,
+      battle one another for control of England. Sequel to
+      Oberon's Legacy.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk106"&gt;
+      &lt;author&gt;Randall, Cynthia&lt;/author&gt;
+      &lt;title&gt;Lover Birds&lt;/title&gt;
+      &lt;genre&gt;Romance&lt;/genre&gt;
+      &lt;price&gt;4.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-09-02&lt;/publish_date&gt;
+      &lt;description&gt;When Carla meets Paul at an ornithology
+      conference, tempers fly as feathers get ruffled.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk107"&gt;
+      &lt;author&gt;Thurman, Paula&lt;/author&gt;
+      &lt;title&gt;Splish Splash&lt;/title&gt;
+      &lt;genre&gt;Romance&lt;/genre&gt;
+      &lt;price&gt;4.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-11-02&lt;/publish_date&gt;
+      &lt;description&gt;A deep sea diver finds true love twenty
+      thousand leagues beneath the sea.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk108"&gt;
+      &lt;author&gt;Knorr, Stefan&lt;/author&gt;
+      &lt;title&gt;Creepy Crawlies&lt;/title&gt;
+      &lt;genre&gt;Horror&lt;/genre&gt;
+      &lt;price&gt;4.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-12-06&lt;/publish_date&gt;
+      &lt;description&gt;An anthology of horror stories about roaches,
+      centipedes, scorpions  and other insects.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk109"&gt;
+      &lt;author&gt;Kress, Peter&lt;/author&gt;
+      &lt;title&gt;Paradox Lost&lt;/title&gt;
+      &lt;genre&gt;Science Fiction&lt;/genre&gt;
+      &lt;price&gt;6.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-11-02&lt;/publish_date&gt;
+      &lt;description&gt;After an inadvertant trip through a Heisenberg
+      Uncertainty Device, James Salway discovers the problems
+      of being quantum.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk110"&gt;
+      &lt;author&gt;O'Brien, Tim&lt;/author&gt;
+      &lt;title&gt;Microsoft .NET: The Programming Bible&lt;/title&gt;
+      &lt;genre&gt;Computer&lt;/genre&gt;
+      &lt;price&gt;36.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-12-09&lt;/publish_date&gt;
+      &lt;description&gt;Microsoft's .NET initiative is explored in
+      detail in this deep programmer's reference.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk111"&gt;
+      &lt;author&gt;O'Brien, Tim&lt;/author&gt;
+      &lt;title&gt;MSXML3: A Comprehensive Guide&lt;/title&gt;
+      &lt;genre&gt;Computer&lt;/genre&gt;
+      &lt;price&gt;36.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-12-01&lt;/publish_date&gt;
+      &lt;description&gt;The Microsoft MSXML3 parser is covered in
+      detail, with attention to XML DOM interfaces, XSLT processing,
+      SAX and more.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk112"&gt;
+      &lt;author&gt;Galos, Mike&lt;/author&gt;
+      &lt;title&gt;Visual Studio 7: A Comprehensive Guide&lt;/title&gt;
+      &lt;genre&gt;Computer&lt;/genre&gt;
+      &lt;price&gt;49.95&lt;/price&gt;
+      &lt;publish_date&gt;2001-04-16&lt;/publish_date&gt;
+      &lt;description&gt;Microsoft Visual Studio 7 is explored in depth,
+      looking at how Visual Basic, Visual C++, C#, and ASP+ are
+      integrated into a comprehensive development
+      environment.&lt;/description&gt;
+   &lt;/book&gt;
+&lt;/catalog&gt; 
  </msg>
-<msg timestamp="20231031 14:22:46.941" level="INFO">GET Response : url=https://httpbin.org/get 
+<msg timestamp="20231031 15:04:48.692" level="INFO">POST Response : url=https://httpbin.org/post 
  status=200, reason=OK 
- headers={'Date': 'Tue, 31 Oct 2023 09:22:47 GMT', 'Content-Type': 'application/json', 'Content-Length': '351', 'Connection': 'keep-alive', 'Server': 'gunicorn/19.9.0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true'} 
+ headers={'Date': 'Tue, 31 Oct 2023 10:04:49 GMT', 'Content-Type': 'application/json', 'Content-Length': '5095', 'Connection': 'keep-alive', 'Server': 'gunicorn/19.9.0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true'} 
  body={
   "args": {}, 
+  "data": "&lt;?xml version=\"1.0\"?&gt;\n&lt;catalog&gt;\n   &lt;book id=\"bk101\"&gt;\n      &lt;author&gt;Gambardella, Matthew&lt;/author&gt;\n      &lt;title&gt;XML Developer's Guide&lt;/title&gt;\n      &lt;genre&gt;Computer&lt;/genre&gt;\n      &lt;price&gt;44.95&lt;/price&gt;\n      &lt;publish_date&gt;2000-10-01&lt;/publish_date&gt;\n      &lt;description&gt;An in-depth look at creating applications\n      with XML.&lt;/description&gt;\n   &lt;/book&gt;\n   &lt;book id=\"bk102\"&gt;\n      &lt;author&gt;Ralls, Kim&lt;/author&gt;\n      &lt;title&gt;Midnight Rain&lt;/title&gt;\n      &lt;genre&gt;Fantasy&lt;/genre&gt;\n      &lt;price&gt;5.95&lt;/price&gt;\n      &lt;publish_date&gt;2000-12-16&lt;/publish_date&gt;\n      &lt;description&gt;A former architect battles corporate zombies,\n      an evil sorceress, and her own childhood to become queen\n      of the world.&lt;/description&gt;\n   &lt;/book&gt;\n   &lt;book id=\"bk103\"&gt;\n      &lt;author&gt;Corets, Eva&lt;/author&gt;\n      &lt;title&gt;Maeve Ascendant&lt;/title&gt;\n      &lt;genre&gt;Fantasy&lt;/genre&gt;\n      &lt;price&gt;5.95&lt;/price&gt;\n      &lt;publish_date&gt;2000-11-17&lt;/publish_date&gt;\n      &lt;description&gt;After the collapse of a nanotechnology\n      society in England, the young survivors lay the\n      foundation for a new society.&lt;/description&gt;\n   &lt;/book&gt;\n   &lt;book id=\"bk104\"&gt;\n      &lt;author&gt;Corets, Eva&lt;/author&gt;\n      &lt;title&gt;Oberon's Legacy&lt;/title&gt;\n      &lt;genre&gt;Fantasy&lt;/genre&gt;\n      &lt;price&gt;5.95&lt;/price&gt;\n      &lt;publish_date&gt;2001-03-10&lt;/publish_date&gt;\n      &lt;description&gt;In post-apocalypse England, the mysterious\n      agent known only as Oberon helps to create a new life\n      for the inhabitants of London. Sequel to Maeve\n      Ascendant.&lt;/description&gt;\n   &lt;/book&gt;\n   &lt;book id=\"bk105\"&gt;\n      &lt;author&gt;Corets, Eva&lt;/author&gt;\n      &lt;title&gt;The Sundered Grail&lt;/title&gt;\n      &lt;genre&gt;Fantasy&lt;/genre&gt;\n      &lt;price&gt;5.95&lt;/price&gt;\n      &lt;publish_date&gt;2001-09-10&lt;/publish_date&gt;\n      &lt;description&gt;The two daughters of Maeve, half-sisters,\n      battle one another for control of England. Sequel to\n      Oberon's Legacy.&lt;/description&gt;\n   &lt;/book&gt;\n   &lt;book id=\"bk106\"&gt;\n      &lt;author&gt;Randall, Cynthia&lt;/author&gt;\n      &lt;title&gt;Lover Birds&lt;/title&gt;\n      &lt;genre&gt;Romance&lt;/genre&gt;\n      &lt;price&gt;4.95&lt;/price&gt;\n      &lt;publish_date&gt;2000-09-02&lt;/publish_date&gt;\n      &lt;description&gt;When Carla meets Paul at an ornithology\n      conference, tempers fly as feathers get ruffled.&lt;/description&gt;\n   &lt;/book&gt;\n   &lt;book id=\"bk107\"&gt;\n      &lt;author&gt;Thurman, Paula&lt;/author&gt;\n      &lt;title&gt;Splish Splash&lt;/title&gt;\n      &lt;genre&gt;Romance&lt;/genre&gt;\n      &lt;price&gt;4.95&lt;/price&gt;\n      &lt;publish_date&gt;2000-11-02&lt;/publish_date&gt;\n      &lt;description&gt;A deep sea diver finds true love twenty\n      thousand leagues beneath the sea.&lt;/description&gt;\n   &lt;/book&gt;\n   &lt;book id=\"bk108\"&gt;\n      &lt;author&gt;Knorr, Stefan&lt;/author&gt;\n      &lt;title&gt;Creepy Crawlies&lt;/title&gt;\n      &lt;genre&gt;Horror&lt;/genre&gt;\n      &lt;price&gt;4.95&lt;/price&gt;\n      &lt;publish_date&gt;2000-12-06&lt;/publish_date&gt;\n      &lt;description&gt;An anthology of horror stories about roaches,\n      centipedes, scorpions  and other insects.&lt;/description&gt;\n   &lt;/book&gt;\n   &lt;book id=\"bk109\"&gt;\n      &lt;author&gt;Kress, Peter&lt;/author&gt;\n      &lt;title&gt;Paradox Lost&lt;/title&gt;\n      &lt;genre&gt;Science Fiction&lt;/genre&gt;\n      &lt;price&gt;6.95&lt;/price&gt;\n      &lt;publish_date&gt;2000-11-02&lt;/publish_date&gt;\n      &lt;description&gt;After an inadvertant trip through a Heisenberg\n      Uncertainty Device, James Salway discovers the problems\n      of being quantum.&lt;/description&gt;\n   &lt;/book&gt;\n   &lt;book id=\"bk110\"&gt;\n      &lt;author&gt;O'Brien, Tim&lt;/author&gt;\n      &lt;title&gt;Microsoft .NET: The Programming Bible&lt;/title&gt;\n      &lt;genre&gt;Computer&lt;/genre&gt;\n      &lt;price&gt;36.95&lt;/price&gt;\n      &lt;publish_date&gt;2000-12-09&lt;/publish_date&gt;\n      &lt;description&gt;Microsoft's .NET initiative is explored in\n      detail in this deep programmer's reference.&lt;/description&gt;\n   &lt;/book&gt;\n   &lt;book id=\"bk111\"&gt;\n      &lt;author&gt;O'Brien, Tim&lt;/author&gt;\n      &lt;title&gt;MSXML3: A Comprehensive Guide&lt;/title&gt;\n      &lt;genre&gt;Computer&lt;/genre&gt;\n      &lt;price&gt;36.95&lt;/price&gt;\n      &lt;publish_date&gt;2000-12-01&lt;/publish_date&gt;\n      &lt;description&gt;The Microsoft MSXML3 parser is covered in\n      detail, with attention to XML DOM interfaces, XSLT processing,\n      SAX and more.&lt;/description&gt;\n   &lt;/book&gt;\n   &lt;book id=\"bk112\"&gt;\n      &lt;author&gt;Galos, Mike&lt;/author&gt;\n      &lt;title&gt;Visual Studio 7: A Comprehensive Guide&lt;/title&gt;\n      &lt;genre&gt;Computer&lt;/genre&gt;\n      &lt;price&gt;49.95&lt;/price&gt;\n      &lt;publish_date&gt;2001-04-16&lt;/publish_date&gt;\n      &lt;description&gt;Microsoft Visual Studio 7 is explored in depth,\n      looking at how Visual Basic, Visual C++, C#, and ASP+ are\n      integrated into a comprehensive development\n      environment.&lt;/description&gt;\n   &lt;/book&gt;\n&lt;/catalog&gt;", 
+  "files": {}, 
+  "form": {}, 
   "headers": {
     "Accept": "*/*", 
     "Accept-Encoding": "gzip, deflate", 
-    "Authorization": "Basic dXNlcjpwYXNz", 
+    "Authorization": "\"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva\" Content-Type=text/xml", 
+    "Content-Length": "4411", 
     "Host": "httpbin.org", 
     "User-Agent": "python-requests/2.31.0", 
-    "X-Amzn-Trace-Id": "Root=1-6540c767-253490eb0127d71478cefe2b"
+    "X-Amzn-Trace-Id": "Root=1-6540d141-5faa042202997fa55b003abf"
   }, 
+  "json": null, 
   "origin": "103.151.43.91", 
-  "url": "https://httpbin.org/get"
+  "url": "https://httpbin.org/post"
 }
  
  </msg>
-<msg timestamp="20231031 14:22:46.941" level="INFO">${response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20231031 14:22:45.702" endtime="20231031 14:22:46.941"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>${response}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20231031 14:22:46.942" endtime="20231031 14:22:46.943"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>${response.content}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20231031 14:22:46.944" endtime="20231031 14:22:46.946"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>${response.headers}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20231031 14:22:46.947" endtime="20231031 14:22:46.948"/>
+<msg timestamp="20231031 15:04:48.693" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231031 15:04:47.180" endtime="20231031 15:04:48.693"/>
 </kw>
 <kw name="Convert To String" library="BuiltIn">
 <var>${status_code}</var>
 <arg>${response.status_code}</arg>
 <doc>Converts the given item to a Unicode string.</doc>
-<msg timestamp="20231031 14:22:46.950" level="INFO">${status_code} = 200</msg>
-<status status="PASS" starttime="20231031 14:22:46.949" endtime="20231031 14:22:46.950"/>
+<msg timestamp="20231031 15:04:48.695" level="INFO">${status_code} = 200</msg>
+<status status="PASS" starttime="20231031 15:04:48.694" endtime="20231031 15:04:48.695"/>
 </kw>
 <kw name="Should Be Equal" library="BuiltIn">
 <arg>${status_code}</arg>
 <arg>200</arg>
 <doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20231031 14:22:46.951" endtime="20231031 14:22:46.951"/>
+<status status="PASS" starttime="20231031 15:04:48.696" endtime="20231031 15:04:48.696"/>
 </kw>
-<kw name="Convert To String" library="BuiltIn">
-<var>${body}</var>
-<arg>${response.content}</arg>
-<doc>Converts the given item to a Unicode string.</doc>
-<msg timestamp="20231031 14:22:46.952" level="INFO">${body} = {
-  "args": {}, 
-  "headers": {
-    "Accept": "*/*", 
-    "Accept-Encoding": "gzip, deflate", 
-    "Authorization": "Basic dXNlcjpwYXNz", 
-    "Host": "httpbin.org", 
-    "User-Agent": "python-request...</msg>
-<status status="PASS" starttime="20231031 14:22:46.951" endtime="20231031 14:22:46.952"/>
-</kw>
-<kw name="Should Contain" library="BuiltIn">
-<arg>${body}</arg>
-<arg>httpbin.org</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" starttime="20231031 14:22:46.953" endtime="20231031 14:22:46.953"/>
-</kw>
-<kw name="Get From Dictionary" library="Collections">
-<var>${contentTypeValue}</var>
-<arg>${response.headers}</arg>
-<arg>Content-Type</arg>
-<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
-<msg timestamp="20231031 14:22:46.954" level="INFO">${contentTypeValue} = application/json</msg>
-<status status="PASS" starttime="20231031 14:22:46.954" endtime="20231031 14:22:46.954"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${contentTypeValue}</arg>
-<arg>application/json</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20231031 14:22:46.955" endtime="20231031 14:22:46.955"/>
-</kw>
-<status status="PASS" starttime="20231031 14:22:45.700" endtime="20231031 14:22:46.955"/>
+<status status="PASS" starttime="20231031 15:04:47.177" endtime="20231031 15:04:48.697"/>
 </test>
 <doc>This is GET request test case</doc>
-<status status="PASS" starttime="20231031 14:22:45.602" endtime="20231031 14:22:46.957"/>
+<status status="PASS" starttime="20231031 15:04:47.076" endtime="20231031 15:04:48.698"/>
 </suite>
 <statistics>
 <total>
@@ -124,7 +214,7 @@
 <tag>
 </tag>
 <suite>
-<stat pass="1" fail="0" skip="0" id="s1" name="TC6 BasicAuthType">TC6 BasicAuthType</stat>
+<stat pass="1" fail="0" skip="0" id="s1" name="TC7 BearerAuthType">TC7 BearerAuthType</stat>
 </suite>
 </statistics>
 <errors>
