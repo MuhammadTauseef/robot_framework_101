@@ -14,8 +14,8 @@ Create_Something
     ${header}=    create dictionary    Content-Type=application/json
     ${response} =   Post on session     mysession    /post      ${body}     ${header}
 
-    Log to console      ${response.status_code}
-    Log to console      ${response.content}
+#    Log to console      ${response.status_code}
+#    Log to console      ${response.content}
 
 
     ${status_code}=  convert to string    ${response.status_code}
