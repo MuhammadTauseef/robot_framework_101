@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation    This is GET request test case
+Documentation    This is Basic Auth type request test case
 Resource       ../Resources/resources.robot
 Library     Collections
 Library     RequestsLibrary

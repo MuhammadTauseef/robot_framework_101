@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation    This is GET request test case
+Documentation    This is Bearer Auth type request test case
 Resource       ../Resources/resources.robot
 Library     Collections
 Library     RequestsLibrary
@@ -10,7 +10,7 @@ ${base_url}     https://httpbin.org
 ${bearerToken}  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva"
 
 *** Test Cases ***
-BasicAuthTypeTest
+BearerAuthTypeTest
     Create session  mysession   ${base_url}   verify=true
 
     ${headers}  create dictionary     Authorization=${bearerToken} Content-Type=text/xml
