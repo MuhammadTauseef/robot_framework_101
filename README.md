@@ -323,5 +323,38 @@ To get first book
 
 Final file is TC4_XML.robot
 
+### Create test case for headers and cookies validation
 
-http://jsonplaceholder.typicode.com/
+Headers can be accessed like below
+```
+    ${contentTypeValue}=  get from dictionary    ${response.headers}    Content-Type
+    should be equal    ${contentTypeValue}   application/json; charset=utf-8
+```
+Cookies can be accessed like below
+```
+    ${cookieValue}=     get from dictionary    ${response.cookies}      _cfduid
+    log to console    ${cookieValue}
+```
+Final file is TC5_ValidateHeadersAndCookies.robot
+
+
+### Create test case for basic authentication validation
+
+Username and password can be created and passed along with Rest request as below
+```
+BasicAuthTypeTest
+    ${auth}=    create list    user     pass
+    Create session  mysession   ${base_url}     auth=${auth}     verify=true
+    ${response} =   Get on session     mysession    /get
+
+    ${status_code}=  convert to string    ${response.status_code}
+    should be equal    ${status_code}   200
+```
+
+Final file is TC6_BasicAuthType.robot
+
+### Create test case for basic authentication validation
+
+
+
+Final file is TC7_BearerAuthType.robot
