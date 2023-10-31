@@ -297,3 +297,31 @@ ${window_title_value}=      get value from json     ${json_data}        $.widget
 should be equal    ${window_title_value[0]}   Sample Konfabulator Widget
 ```
 Final file is TC3_JSON.robot
+
+### Create test case for XML validation
+
+XML load from a file can be done with below method
+```
+    ${xml_data}=       parse xml     Data/books.xml
+```
+However, during API testing json will come as a response from API call.
+
+To select a particular book title
+```
+    ${first_title}=      get element text     ${xml_data}   .//book[@id='bk101'][1]/title[1]
+```
+
+To get total book count
+```
+    ${count_books}=     get element count      ${xml_data}      .//book
+```
+
+To get first book
+```
+    ${first_book}=  get child elements    ${xml_data}       .//book[1]
+```
+
+Final file is TC4_XML.robot
+
+
+http://jsonplaceholder.typicode.com/

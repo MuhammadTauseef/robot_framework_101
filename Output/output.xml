@@ -1,64 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231031 12:03:38.805" rpa="false" schemaversion="4">
-<suite id="s1" name="TC3 JSON" source="C:\Users\emutaus\PycharmProjects\robot_framework_101\Tests\TC3_JSON.robot">
-<test id="s1-t1" name="ValidateJSON" line="9">
-<kw name="Load Json From File" library="JSONLibrary">
-<var>${json_data}</var>
-<arg>Data/jsondata.json</arg>
-<doc>Load JSON from file.</doc>
-<msg timestamp="20231031 12:03:38.911" level="INFO">${json_data} = {'widget': {'debug': 'on', 'window': {'title': 'Sample Konfabulator Widget', 'name': 'main_window', 'width': 500, 'height': 500}, 'image': {'src': 'Images/Sun.png', 'name': 'sun1', 'hOffset': 250, 'vO...</msg>
-<status status="PASS" starttime="20231031 12:03:38.910" endtime="20231031 12:03:38.911"/>
+<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231031 13:24:59.934" rpa="false" schemaversion="4">
+<suite id="s1" name="TC4 XML" source="C:\Users\emutaus\PycharmProjects\robot_framework_101\Tests\TC4_XML.robot">
+<test id="s1-t1" name="ValidateXML" line="9">
+<kw name="Parse Xml" library="XML">
+<var>${xml_data}</var>
+<arg>Data/books.xml</arg>
+<doc>Parses the given XML file or string into an element structure.</doc>
+<msg timestamp="20231031 13:24:59.977" level="INFO">${xml_data} = &lt;Element 'catalog' at 0x00000187764BECF0&gt;</msg>
+<status status="PASS" starttime="20231031 13:24:59.976" endtime="20231031 13:24:59.977"/>
 </kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>${debug_value}</var>
-<arg>${json_data}</arg>
-<arg>$.widget.debug</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20231031 12:03:38.923" level="INFO">${debug_value} = ['on']</msg>
-<status status="PASS" starttime="20231031 12:03:38.911" endtime="20231031 12:03:38.923"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>${window_title_value}</var>
-<arg>${json_data}</arg>
-<arg>$.widget.window.title</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20231031 12:03:38.934" level="INFO">${window_title_value} = ['Sample Konfabulator Widget']</msg>
-<status status="PASS" starttime="20231031 12:03:38.924" endtime="20231031 12:03:38.934"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>${image_value}</var>
-<arg>${json_data}</arg>
-<arg>$.widget.image</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20231031 12:03:38.943" level="INFO">${image_value} = [{'src': 'Images/Sun.png', 'name': 'sun1', 'hOffset': 250, 'vOffset': 250, 'alignment': 'center'}]</msg>
-<status status="PASS" starttime="20231031 12:03:38.934" endtime="20231031 12:03:38.943"/>
+<kw name="Get Element Text" library="XML">
+<var>${first_title}</var>
+<arg>${xml_data}</arg>
+<arg>.//book[@id='bk101'][1]/title[1]</arg>
+<doc>Returns all text of the element, possibly whitespace normalized.</doc>
+<msg timestamp="20231031 13:24:59.978" level="INFO">${first_title} = XML Developer's Guide</msg>
+<status status="PASS" starttime="20231031 13:24:59.977" endtime="20231031 13:24:59.978"/>
 </kw>
 <kw name="Log To Console" library="BuiltIn">
-<arg>${json_data}</arg>
+<arg>${first_title}</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20231031 12:03:38.943" endtime="20231031 12:03:38.944"/>
+<status status="PASS" starttime="20231031 13:24:59.978" endtime="20231031 13:24:59.979"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${first_title}</arg>
+<arg>XML Developer's Guide</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20231031 13:24:59.979" endtime="20231031 13:24:59.979"/>
+</kw>
+<kw name="Get Element" library="XML">
+<var>${first_title}</var>
+<arg>${xml_data}</arg>
+<arg>.//book[@id='bk101'][1]/title</arg>
+<doc>Returns an element in the ``source`` matching the ``xpath``.</doc>
+<msg timestamp="20231031 13:24:59.980" level="INFO">${first_title} = &lt;Element 'title' at 0x00000187764BEDE0&gt;</msg>
+<status status="PASS" starttime="20231031 13:24:59.979" endtime="20231031 13:24:59.980"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${first_title.text}</arg>
+<arg>XML Developer's Guide</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20231031 13:24:59.980" endtime="20231031 13:24:59.980"/>
+</kw>
+<kw name="Element Text Should Be" library="XML">
+<arg>${xml_data}</arg>
+<arg>XML Developer's Guide</arg>
+<arg>.//book[@id='bk101'][1]/title</arg>
+<doc>Verifies that the text of the specified element is ``expected``.</doc>
+<status status="PASS" starttime="20231031 13:24:59.981" endtime="20231031 13:24:59.981"/>
+</kw>
+<kw name="Get Element Count" library="XML">
+<var>${count_books}</var>
+<arg>${xml_data}</arg>
+<arg>.//book</arg>
+<doc>Returns and logs how many elements the given ``xpath`` matches.</doc>
+<msg timestamp="20231031 13:24:59.981" level="INFO">12 elements matched './/book'.</msg>
+<msg timestamp="20231031 13:24:59.981" level="INFO">${count_books} = 12</msg>
+<status status="PASS" starttime="20231031 13:24:59.981" endtime="20231031 13:24:59.981"/>
 </kw>
 <kw name="Log To Console" library="BuiltIn">
-<arg>${debug_value}</arg>
+<arg>${count_books}</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20231031 12:03:38.945" endtime="20231031 12:03:38.945"/>
+<status status="PASS" starttime="20231031 13:24:59.982" endtime="20231031 13:24:59.982"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${count_books}</arg>
+<arg>12</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20231031 13:24:59.983" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231031 13:24:59.982" endtime="20231031 13:24:59.983"/>
+</kw>
+<kw name="Element Attribute Should Be" library="XML">
+<arg>${xml_data}</arg>
+<arg>id</arg>
+<arg>bk101</arg>
+<arg>.//book[1]</arg>
+<doc>Verifies that the specified attribute is ``expected``.</doc>
+<status status="PASS" starttime="20231031 13:24:59.983" endtime="20231031 13:24:59.983"/>
+</kw>
+<kw name="Get Child Elements" library="XML">
+<var>${first_book}</var>
+<arg>${xml_data}</arg>
+<arg>.//book[1]</arg>
+<doc>Returns the child elements of the specified element as a list.</doc>
+<msg timestamp="20231031 13:24:59.983" level="INFO">${first_book} = [&lt;Element 'author' at 0x00000187764BED90&gt;, &lt;Element 'title' at 0x00000187764BEDE0&gt;, &lt;Element 'genre' at 0x00000187764BEE30&gt;, &lt;Element 'price' at 0x00000187764BEE80&gt;, &lt;Element 'publish_date' at 0x00000...</msg>
+<status status="PASS" starttime="20231031 13:24:59.983" endtime="20231031 13:24:59.983"/>
+</kw>
+<kw name="Get Element Text" library="XML">
+<var>${author}</var>
+<arg>${first_book[0]}</arg>
+<doc>Returns all text of the element, possibly whitespace normalized.</doc>
+<msg timestamp="20231031 13:24:59.984" level="INFO">${author} = Gambardella, Matthew</msg>
+<status status="PASS" starttime="20231031 13:24:59.984" endtime="20231031 13:24:59.984"/>
 </kw>
 <kw name="Should Be Equal" library="BuiltIn">
-<arg>${debug_value[0]}</arg>
-<arg>on</arg>
+<arg>${author}</arg>
+<arg>Gambardella, Matthew</arg>
 <doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20231031 12:03:38.945" endtime="20231031 12:03:38.946"/>
+<status status="PASS" starttime="20231031 13:24:59.985" endtime="20231031 13:24:59.985"/>
 </kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${window_title_value[0]}</arg>
-<arg>Sample Konfabulator Widget</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20231031 12:03:38.946" endtime="20231031 12:03:38.946"/>
-</kw>
-<status status="PASS" starttime="20231031 12:03:38.910" endtime="20231031 12:03:38.947"/>
+<status status="PASS" starttime="20231031 13:24:59.976" endtime="20231031 13:24:59.985"/>
 </test>
 <doc>This is JSON validation test case</doc>
-<status status="PASS" starttime="20231031 12:03:38.806" endtime="20231031 12:03:38.947"/>
+<status status="PASS" starttime="20231031 13:24:59.936" endtime="20231031 13:24:59.986"/>
 </suite>
 <statistics>
 <total>
@@ -67,7 +113,7 @@
 <tag>
 </tag>
 <suite>
-<stat pass="1" fail="0" skip="0" id="s1" name="TC3 JSON">TC3 JSON</stat>
+<stat pass="1" fail="0" skip="0" id="s1" name="TC4 XML">TC4 XML</stat>
 </suite>
 </statistics>
 <errors>
