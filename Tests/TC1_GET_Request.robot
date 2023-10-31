@@ -7,13 +7,12 @@ Library     RequestsLibrary
 *** Keywords ***
 
 *** Variables ***
-${base_url}     https://api.publicapis.org
-${title}        Axolotl
+${base_url}     https://httpbin.org
 
 *** Test Cases ***
 Get_entry
     Create session  mysession   ${base_url}     verify=true
-    ${response} =   Get on session     mysession   /entries\?title\=${title}
+    ${response} =   Get on session     mysession    /get
 #    Log to console      ${response}
 #    Log to console      ${response.content}
 #    Log to console      ${response.headers}
@@ -23,7 +22,7 @@ Get_entry
 
 
     ${body}=  convert to string    ${response.content}
-    should contain    ${body}   ${title}
+    should contain    ${body}       httpbin.org
 
     ${contentTypeValue}=  get from dictionary    ${response.headers}    Content-Type
     should be equal    ${contentTypeValue}   application/json

@@ -1,79 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231030 23:26:15.850" rpa="false" schemaversion="4">
+<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231031 10:38:06.086" rpa="false" schemaversion="4">
 <suite id="s1" name="TC1 GET Request" source="C:\Users\emutaus\PycharmProjects\robot_framework_101\Tests\TC1_GET_Request.robot">
-<test id="s1-t1" name="Get_entry" line="14">
+<test id="s1-t1" name="Get_entry" line="13">
 <kw name="Create Session" library="RequestsLibrary">
 <arg>mysession</arg>
 <arg>${base_url}</arg>
 <arg>verify=true</arg>
 <doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20231030 23:26:15.943" level="INFO">Creating Session using : alias=mysession, url=https://api.publicapis.org, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
-<status status="PASS" starttime="20231030 23:26:15.943" endtime="20231030 23:26:15.943"/>
+<msg timestamp="20231031 10:38:06.177" level="INFO">Creating Session using : alias=mysession, url=https://httpbin.org, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20231031 10:38:06.177" endtime="20231031 10:38:06.177"/>
 </kw>
 <kw name="GET On Session" library="RequestsLibrary">
 <var>${response}</var>
 <arg>mysession</arg>
-<arg>/entries\?title\=${title}</arg>
+<arg>/get</arg>
 <doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20231030 23:26:17.763" level="INFO">GET Request : url=https://api.publicapis.org/entries?title=Axolotl 
- path_url=/entries?title=Axolotl 
+<msg timestamp="20231031 10:38:08.414" level="INFO">GET Request : url=https://httpbin.org/get 
+ path_url=/get 
  headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
  body=None 
  </msg>
-<msg timestamp="20231030 23:26:17.763" level="INFO">GET Response : url=https://api.publicapis.org/entries?title=Axolotl 
+<msg timestamp="20231031 10:38:08.414" level="INFO">GET Response : url=https://httpbin.org/get 
  status=200, reason=OK 
- headers={'Access-Control-Allow-Origin': '*', 'Content-Length': '199', 'Content-Type': 'application/json', 'Date': 'Mon, 30 Oct 2023 18:26:18 GMT', 'Server': 'Caddy', 'X-Rate-Limit-Duration': '1', 'X-Rate-Limit-Limit': '10.00', 'X-Rate-Limit-Request-Forwarded-For': '103.151.43.91', 'X-Rate-Limit-Request-Remote-Addr': '172.17.0.1:42678'} 
- body={"count":1,"entries":[{"API":"Axolotl","Description":"Collection of axolotl pictures and facts","Auth":"","HTTPS":true,"Cors":"no","Link":"https://theaxolotlapi.netlify.app/","Category":"Animals"}]}
+ headers={'Date': 'Tue, 31 Oct 2023 05:38:09 GMT', 'Content-Type': 'application/json', 'Content-Length': '307', 'Connection': 'keep-alive', 'Server': 'gunicorn/19.9.0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true'} 
+ body={
+  "args": {}, 
+  "headers": {
+    "Accept": "*/*", 
+    "Accept-Encoding": "gzip, deflate", 
+    "Host": "httpbin.org", 
+    "User-Agent": "python-requests/2.31.0", 
+    "X-Amzn-Trace-Id": "Root=1-654092c1-03505bd26332f85b5e94a5aa"
+  }, 
+  "origin": "103.151.43.91", 
+  "url": "https://httpbin.org/get"
+}
  
  </msg>
-<msg timestamp="20231030 23:26:17.764" level="INFO">${response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20231030 23:26:15.944" endtime="20231030 23:26:17.764"/>
+<msg timestamp="20231031 10:38:08.414" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231031 10:38:06.178" endtime="20231031 10:38:08.414"/>
 </kw>
 <kw name="Convert To String" library="BuiltIn">
 <var>${status_code}</var>
 <arg>${response.status_code}</arg>
 <doc>Converts the given item to a Unicode string.</doc>
-<msg timestamp="20231030 23:26:17.765" level="INFO">${status_code} = 200</msg>
-<status status="PASS" starttime="20231030 23:26:17.764" endtime="20231030 23:26:17.765"/>
+<msg timestamp="20231031 10:38:08.416" level="INFO">${status_code} = 200</msg>
+<status status="PASS" starttime="20231031 10:38:08.415" endtime="20231031 10:38:08.416"/>
 </kw>
 <kw name="Should Be Equal" library="BuiltIn">
 <arg>${status_code}</arg>
 <arg>200</arg>
 <doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20231030 23:26:17.765" endtime="20231030 23:26:17.765"/>
+<status status="PASS" starttime="20231031 10:38:08.416" endtime="20231031 10:38:08.416"/>
 </kw>
 <kw name="Convert To String" library="BuiltIn">
 <var>${body}</var>
 <arg>${response.content}</arg>
 <doc>Converts the given item to a Unicode string.</doc>
-<msg timestamp="20231030 23:26:17.766" level="INFO">${body} = {"count":1,"entries":[{"API":"Axolotl","Description":"Collection of axolotl pictures and facts","Auth":"","HTTPS":true,"Cors":"no","Link":"https://theaxolotlapi.netlify.app/","Category":"Animals"}]}
-</msg>
-<status status="PASS" starttime="20231030 23:26:17.766" endtime="20231030 23:26:17.766"/>
+<msg timestamp="20231031 10:38:08.417" level="INFO">${body} = {
+  "args": {}, 
+  "headers": {
+    "Accept": "*/*", 
+    "Accept-Encoding": "gzip, deflate", 
+    "Host": "httpbin.org", 
+    "User-Agent": "python-requests/2.31.0", 
+    "X-Amzn-Trace-Id": "Root=1-6...</msg>
+<status status="PASS" starttime="20231031 10:38:08.417" endtime="20231031 10:38:08.417"/>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <arg>${body}</arg>
-<arg>${title}</arg>
+<arg>httpbin.org</arg>
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" starttime="20231030 23:26:17.766" endtime="20231030 23:26:17.766"/>
+<status status="PASS" starttime="20231031 10:38:08.418" endtime="20231031 10:38:08.418"/>
 </kw>
 <kw name="Get From Dictionary" library="Collections">
 <var>${contentTypeValue}</var>
 <arg>${response.headers}</arg>
 <arg>Content-Type</arg>
 <doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
-<msg timestamp="20231030 23:26:17.767" level="INFO">${contentTypeValue} = application/json</msg>
-<status status="PASS" starttime="20231030 23:26:17.767" endtime="20231030 23:26:17.767"/>
+<msg timestamp="20231031 10:38:08.418" level="INFO">${contentTypeValue} = application/json</msg>
+<status status="PASS" starttime="20231031 10:38:08.418" endtime="20231031 10:38:08.419"/>
 </kw>
 <kw name="Should Be Equal" library="BuiltIn">
 <arg>${contentTypeValue}</arg>
 <arg>application/json</arg>
 <doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20231030 23:26:17.767" endtime="20231030 23:26:17.767"/>
+<status status="PASS" starttime="20231031 10:38:08.419" endtime="20231031 10:38:08.419"/>
 </kw>
-<status status="PASS" starttime="20231030 23:26:15.943" endtime="20231030 23:26:17.767"/>
+<status status="PASS" starttime="20231031 10:38:06.177" endtime="20231031 10:38:08.419"/>
 </test>
 <doc>This is GET request test case</doc>
-<status status="PASS" starttime="20231030 23:26:15.851" endtime="20231030 23:26:17.768"/>
+<status status="PASS" starttime="20231031 10:38:06.087" endtime="20231031 10:38:08.420"/>
 </suite>
 <statistics>
 <total>

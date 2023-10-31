@@ -210,11 +210,8 @@ pip install robotframework-jsonlibrary
 ### Create first test case with GET
 Public free API we are going to test is as below
 
-https://github.com/davemachado/public-api
+https://resttesttest.com/#
 
-https://api.publicapis.org/entries
-
-https://api.publicapis.org/entries?title=Axolotl
 
 Import libraries in settings
 ```
@@ -227,8 +224,7 @@ Library     RequestsLibrary
 Define Variables
 ```
 *** Variables ***
-${base_url}     https://api.publicapis.org
-${title}        Axolotl
+${base_url}     https://httpbin.org
 ```
 
 In the test case log output to the console to check the progress
@@ -236,7 +232,7 @@ In the test case log output to the console to check the progress
 *** Test Cases ***
 Get_entry
     Create session  mysession   ${base_url}     verify=true
-    ${response} =   Get on session     mysession   /entries\?title\=${title}
+    ${response} =   Get on session     mysession   /get
     Log to console      ${response}
     Log to console      ${response.content}
     Log to console      ${response.headers}
@@ -244,12 +240,22 @@ Get_entry
 
 output for response, response.content and resonse.headers will be as below:
 
-<Response [200]>
-
-.b'{"count":1,"entries":[{"API":"Axolotl","Description":"Collection of axolotl pictures and facts","Auth":"","HTTPS":true,"Cors":"no","Link":"https://theaxolotlapi.netlify.app/","Category":"Animals"}]}\n'
-
-.{'Access-Control-Allow-Origin': '*', 'Content-Length': '199', 'Content-Type': 'application/json', 'Date': 'Mon, 30 Oct 2023 18:11:48 GMT', 'Server': 'Caddy', 'X-Rate-Limit-Duration': '1', 'X-Rate-Limit-Limit': '10.00', 'X-Rate-
-Limit-Request-Forwarded-For': '103.151.43.91', 'X-Rate-Limit-Request-Remote-Addr': '172.17.0.1:41072'}
+.<Response [200]>
+.b'{\n  "args": {}, \n  "headers": {\n    "Accept": "*/*", \n    "Accept-Encoding": "gzip, deflate", \n    "Host": "httpbin.org", \n    "User-Agent": "python-requests/2.31.0", \n    "X-Amzn-Trace-Id": "Root=1-654091f6-43d58fdb75
+66750e1c553382"\n  }, \n  "origin": "103.151.43.91", \n  "url": "https://httpbin.org/get"\n}\n'
+.{'Date': 'Tue, 31 Oct 2023 05:34:46 GMT', 'Content-Type': 'application/json', 'Content-Length': '307', 'Connection': 'keep-alive', 'Server': 'gunicorn/19.9.0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentia
+ls': 'true'}
+'{
+  "args": {},
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Host": "httpbin.org",
+    "User-Agent": "python-requests/2.31.0",
+    "X-Amzn-Trace-Id": "Root=1-654091f6-43d58fdb7566750e1c553382"
+  "origin": "103.151.43.91",
+  "url": "https://httpbin.org/get"
+}
 
 Three types of validation is specified in the file, one for status code validation, another for a word present in body
 and lastly, content type validation in the header.
