@@ -369,3 +369,6 @@ Headers and request body can be created and sent in Post request as below
     ${response} =   Post on session     mysession    /post  data=${req_body}    headers=${headers}
 ```
 Final file is TC7_BearerAuthType.robot
+
+### Create test case for API authentication validation
+Final file is TC8_APIAuthType.robot
